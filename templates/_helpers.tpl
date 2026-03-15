@@ -71,26 +71,3 @@ Return the name of the secret containing database credentials.
 {{- end }}
 {{- end }}
 
-{{/*
-Return the database host.
-When the bundled PostgreSQL sub-chart is enabled, derive the service name
-from the postgresql sub-chart's naming convention.
-*/}}
-{{- define "valtimo-mcp-gateway.dbHost" -}}
-{{- if .Values.postgresql.enabled }}
-{{- printf "%s-postgresql" .Release.Name }}
-{{- else }}
-{{- required "database.host is required when postgresql.enabled is false" .Values.database.host }}
-{{- end }}
-{{- end }}
-
-{{/*
-Return the database password secret name when using the bundled PostgreSQL.
-*/}}
-{{- define "valtimo-mcp-gateway.postgresqlSecretName" -}}
-{{- if .Values.postgresql.auth.existingSecret }}
-{{- .Values.postgresql.auth.existingSecret }}
-{{- else }}
-{{- printf "%s-postgresql" .Release.Name }}
-{{- end }}
-{{- end }}

@@ -18,8 +18,3 @@ maintainers:
 sources:
   - https://github.com/ritense/mcp-gateway
 
-dependencies:
-  - name: postgresql
-    version: "16.x.x"
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
