@@ -1,0 +1,124 @@
+# Default values for valtimo-mcp-gateway
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/ritense/mcp-gateway
+  pullPolicy: IfNotPresent
+  tag: ""  # Defaults to .Chart.AppVersion
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: mcp-gateway.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8080
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 5
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Application-specific configuration
+app:
+  # Spring profile to activate
+  springProfile: prod
+  # Server port (should match service.targetPort)
+  serverPort: "8080"
+
+# Admin credentials
+admin:
+  username: admin
+  # Plain-text password (will be stored in a Secret). Change this!
+  password: ""
+  # Reference an existing secret instead of creating one.
+  # The secret must have keys: admin-username, admin-password
+  existingSecret: ""
+
+# Database configuration
+database:
+  # Use the bundled PostgreSQL chart (set to false to use an external DB)
+  host: ""  # Ignored when postgresql.enabled=true
+  port: "5432"
+  name: mcp_gateway
+  user: mcp_gateway
+  # Plain-text password (will be stored in a Secret). Change this!
+  password: ""
+  # Reference an existing secret instead of creating one.
+  # The secret must have keys: db-password
+  existingSecret: ""
+
+# Bitnami PostgreSQL sub-chart configuration
+# https://github.com/bitnami/charts/tree/main/bitnami/postgresql
+postgresql:
+  enabled: true
+  auth:
+    username: mcp_gateway
+    database: mcp_gateway
+    # Set this to a non-empty value; the same value must be set in database.password
+    password: ""
+    # Or reference an existing secret with keys: password, postgres-password
+    existingSecret: ""
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
