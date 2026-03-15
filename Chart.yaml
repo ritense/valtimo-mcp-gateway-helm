@@ -2,7 +2,7 @@ apiVersion: v2
 name: valtimo-mcp-gateway
 description: A Helm chart for Valtimo MCP Gateway — a standalone MCP server that exposes SaaS REST APIs as MCP tools for AI agents
 type: application
-version: 0.1.0
+version: 0.3.0
 appVersion: "main"
 
 keywords:
