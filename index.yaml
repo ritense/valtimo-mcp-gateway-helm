@@ -3,7 +3,28 @@ entries:
   valtimo-mcp-gateway:
   - apiVersion: v2
     appVersion: main
-    created: "2026-03-15T10:20:04.820616+01:00"
+    created: "2026-03-15T13:38:32.097652+01:00"
+    description: A Helm chart for Valtimo MCP Gateway — a standalone MCP server that
+      exposes SaaS REST APIs as MCP tools for AI agents
+    digest: 290048f322fe5f300c19f8a762f0f5347d7a1b87e1289e60d25902c0ec4cfb92
+    keywords:
+    - mcp
+    - ai
+    - gateway
+    - valtimo
+    maintainers:
+    - name: Ritense
+      url: https://github.com/ritense
+    name: valtimo-mcp-gateway
+    sources:
+    - https://github.com/ritense/mcp-gateway
+    type: application
+    urls:
+    - https://ritense.github.io/valtimo-mcp-gateway-helm/valtimo-mcp-gateway-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: main
+    created: "2026-03-15T13:38:32.09517+01:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -27,4 +48,4 @@ entries:
     urls:
     - https://ritense.github.io/valtimo-mcp-gateway-helm/valtimo-mcp-gateway-0.1.0.tgz
     version: 0.1.0
-generated: "2026-03-15T10:20:04.813493+01:00"
+generated: "2026-03-15T13:38:32.08728+01:00"
